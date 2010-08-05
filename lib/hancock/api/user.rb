@@ -2,32 +2,32 @@ module Hancock
   module API
     module Users
       class App < JSON::App
-        get '/users/auto_migrate.json' do
+        get '/users/auto_migrate' do
           DataMapper.auto_migrate!
           ""
         end
 
-        get '/users.json' do
+        get '/users' do
           Hancock::User.all.map { |user| user.attributes_for_api }.to_json
         end
 
-        get '/users/:id.json' do |id|
+        get '/users/:id' do |id|
           user = Hancock::User.get(id)
           user.to_json
         end
 
-        post '/users.json' do
+        post '/users' do
           user = Hancock::User.signup(params)
           user.to_json
         end
 
-        put '/users/:id.json' do |id|
+        put '/users/:id' do |id|
           user = Hancock::User.get(id)
           user.update_from_params(params)
           user.to_json
         end
 
-        delete '/users/:id.json' do |id|
+        delete '/users/:id' do |id|
           user = Hancock::User.get(id)
           user.destroy unless user.admin?
           user.to_json

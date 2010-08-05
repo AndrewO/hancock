@@ -8,7 +8,6 @@ module Hancock
     end
     module JSON
       class App < Sinatra::Base
-        use Rack::AcceptFormat
         enable :methodoverride
 
         before do
