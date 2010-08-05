@@ -1,5 +1,6 @@
 #  ~/p/hancock/bin/shotgun -p PORT config.ru
-Bundler.require_env(:release)
+require 'bundler'
+Bundler.setup
 require 'do_sqlite3'
 require File.expand_path(File.join(File.dirname(__FILE__), '..', '..', 'lib', 'hancock'))
 
@@ -14,6 +15,8 @@ Hancock::Consumer.create(:url => 'http://localhost:9292/sso/login', :label => 'R
 Hancock::Consumer.create(:url => 'http://localhost:9393/sso/login', :label => 'Shotgun Fans', :internal => false)
 
 class Dragon < Hancock::SSO::App
+  enable :show_exceptions
+
   use Hancock::API::Users::App
   run Hancock::API::Consumers::App
 
